@@ -1,32 +1,32 @@
-import React from 'react';
-import { Scrollview, View, TextInput, Button, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, TextInput, Button, StyleSheet } from 'react-native';
 
-function ToDoForm(props) {
+function ToDoForm({ addTask }) {
+  const [taskText, setTaskText] = useState('');
+
+  const handleAddTask = () => {
+    if (taskText.trim() !== '') {
+      addTask(taskText);
+      setTaskText('');
+    }
+  };
+
   return (
     <>
       <View style={styles.form}>
         <TextInput
           style={styles.input}
           placeholder="Add a new task..."
+          onChangeText={(text) => setTaskText(text)}
+          value={taskText}
         />
-        <Button title="Add" />
+        <Button title="Add" onPress={() => addTask(taskText)} />
       </View>
     </>
   );
 }
 
 const styles = StyleSheet.create({
-  task: {
-    padding: 10,
-    borderBottomWidth: 1,
-    borderColor: '#ccc',
-  },
-  completed: {
-    backgroundColor: '#e0e0e0',
-  },
-  taskText: {
-    fontSize: 16,
-  },
   form: {
     flexDirection: 'row',
     justifyContent: 'space-between',
